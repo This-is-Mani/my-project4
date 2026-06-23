@@ -11,12 +11,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Wait for artifact to finalize
-        run: sleep 10
-
-      - name: Download artifact
-        uses: actions/download-artifact@v4
+      - name: Download artifact from CI workflow
+        uses: dawidd6/action-download-artifact@v3
         with:
+          workflow: ci.yml
+          run_id: ${{ github.event.workflow_run.id }}
           name: react-build
           path: .
 
