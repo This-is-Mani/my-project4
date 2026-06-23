@@ -17,7 +17,7 @@ jobs:
           workflow: ci.yml
           run_id: ${{ github.event.workflow_run.id }}
           name: react-build
-          path: .
+          path: build-output
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -27,4 +27,4 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Deploy to S3
-        run: aws s3 sync react-build/ s3://${{ secrets.S3_BUCKET }} --delete
+        run: aws s3 sync build-output/ s3://${{ secrets.S3_BUCKET }} --delete
