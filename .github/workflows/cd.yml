@@ -1,22 +1,23 @@
 name: CD
 
 on:
-  workflow_run:
-    workflows: ["CI"]
-    types:
-      - completed
+  push:
+    branches:
+      - main
 
 jobs:
   deploy:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
 
     steps:
-      - name: Download artifact from CI
-        uses: actions/download-artifact@v4
+      - name: Download artifact from CI workflow (ci.yml)
+        uses: dawidd6/action-download-artifact@v3
         with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: ci.yml
           name: react-build
           path: build-output
+          branch: main
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
