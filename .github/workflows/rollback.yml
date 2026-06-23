@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Download old artifact
+      - name: Download artifact from CI
         uses: dawidd6/action-download-artifact@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -21,7 +21,24 @@ jobs:
           name: react-build
           path: rollback-build
 
-      - name: Debug artifact structure
+      - name: Show structure before fix
+        run: ls -R rollback-build
+
+      - name: Flatten nested folders
+        run: |
+          # If artifact extracted as rollback-build/react-build/*
+          if [ -d "rollback-build/react-build" ]; then
+            mv rollback-build/react-build/* rollback-build/
+            rm -rf rollback-build/react-build
+          fi
+
+          # If artifact extracted as rollback-build/build/*
+          if [ -d "rollback-build/build" ]; then
+            mv rollback-build/build/* rollback-build/
+            rm -rf rollback-build/build
+          fi
+
+      - name: Show structure after fix
         run: ls -R rollback-build
 
       - name: Configure AWS credentials
