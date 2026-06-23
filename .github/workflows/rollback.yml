@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       run_id:
-        description: "CI run ID to rollback to (version you want)"
+        description: "CI run ID to rollback to"
         required: true
 
 jobs:
@@ -21,7 +21,7 @@ jobs:
           name: react-build
           path: rollback-build
 
-      - name: Debug folder structure
+      - name: Debug artifact structure
         run: ls -R rollback-build
 
       - name: Configure AWS credentials
