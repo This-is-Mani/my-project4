@@ -1,7 +1,7 @@
 function App() {
   return (
     <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h1>Hello from React CI/CD on AWS S3 — Version 21!
+      <h1>Hello from React CI/CD on AWS S3 — Version 108!
 </h1>
       <p>This React app was built entirely by GitHub Actions.</p>
     </div>
